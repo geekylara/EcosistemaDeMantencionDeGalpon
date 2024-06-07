@@ -45,7 +45,7 @@ Este proyecto es un sistema automatizado para el mantenimiento de un galpón de 
    ```
 
 2. **Copiar Librerías Necesarias**:
-   - Copia `hx711.py` al directorio `/lib` de tu Raspberry Pi Pico.
+   - Copia `hx711.py` al directorio `/lib` de tu Raspberry Pi Pico. <a rel="noreferrer" target="_new" href="https://github.com/robert-hh/hx711">Repositorio Del sensor HX711</a>
    - Asegúrate de tener las librerías `dht`, `ssd1306`, y `machine` instaladas.
 
 3. **Cargar el Código en la Raspberry Pi Pico**:
