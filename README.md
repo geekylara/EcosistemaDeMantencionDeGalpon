@@ -2,7 +2,7 @@
 
 ## Descripción del Proyecto
 
-Este proyecto es un sistema automatizado para el mantenimiento de un galpón de gallinas ponedoras de la línea genética **Super Nik**. Utiliza una Raspberry Pi Pico para controlar y monitorear diversos aspectos del galpón, incluyendo la temperatura, humedad, nivel de agua y nivel de alimento. El sistema incluye las siguientes características:
+Este proyecto es un sistema automatizado para el mantenimiento de un galpón de gallinas ponedoras de la línea genética **Super Nick**. Utiliza una Raspberry Pi Pico para controlar y monitorear diversos aspectos del galpón, incluyendo la temperatura, humedad, nivel de agua y nivel de alimento. El sistema incluye las siguientes características:
 
 - **Monitoreo de Temperatura y Humedad**: Utiliza un sensor DHT22 para medir la temperatura y la humedad dentro del galpón y muestra los valores en una pantalla OLED.
 - **Control Automático de Ventilación**: Activa un ventilador cuando la temperatura excede un umbral específico para mantener un ambiente óptimo para las gallinas.
