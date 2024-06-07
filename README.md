@@ -49,7 +49,7 @@ Este proyecto es un sistema automatizado para el mantenimiento de un galpón de 
    - Asegúrate de tener las librerías `dht`, `ssd1306`, y `machine` instaladas.
 
 3. **Cargar el Código en la Raspberry Pi Pico**:
-   - Utiliza un editor compatible con MicroPython para cargar el código `main.py` en tu Raspberry Pi Pico.
+   - Utiliza un editor compatible con MicroPython para cargar el código `EcoGalpon.py` en tu Raspberry Pi Pico.
 
 ## Uso del Proyecto
 
@@ -71,17 +71,17 @@ Este proyecto es un sistema automatizado para el mantenimiento de un galpón de 
 
 Los siguientes parámetros están ajustados según los requerimientos de la línea genética de gallinas **Super Nick**. Puedes modificar estos valores en el código según tus propias necesidades:
 
-- **Umbral de Temperatura para Ventilación**: Línea 43 en `main.py`
+- **Umbral de Temperatura para Ventilación**: Línea 43 en `EcoGalpon.py`
   ```python
   if temp > 30:  # Ajusta este valor según sea necesario
   ```
 
-- **Umbral de Peso para Relleno del Comedero**: Línea 49 en `main.py`
+- **Umbral de Peso para Relleno del Comedero**: Línea 49 en `EcoGalpon.py`
   ```python
   if weight < 450:  # Ajusta este valor según sea necesario
   ```
 
-- **Factor de Escala del Sensor de Peso**: Línea 29 en `main.py`
+- **Factor de Escala del Sensor de Peso**: Línea 29 en `EcoGalpon.py`
   ```python
   scale_factor = 214.0267  # Ajusta este valor según la calibración de tu sensor
   ```
