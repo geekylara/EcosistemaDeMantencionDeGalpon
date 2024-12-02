@@ -1,127 +1,124 @@
-# Sistema Automático para Galpón de Gallinas Ponedoras
+### README.md
 
-## Descripción del Proyecto
+# Ecosistema de Mantenimiento de Galpón Automatizado
 
-Este proyecto es un sistema automatizado para el mantenimiento de un galpón de gallinas ponedoras de la línea genética **Super Nick**. Utiliza una Raspberry Pi Pico para controlar y monitorear diversos aspectos del galpón, incluyendo la temperatura, humedad, nivel de agua y nivel de alimento. El sistema incluye las siguientes características:
+Este proyecto implementa un sistema de mantenimiento automatizado para un galpón que alberga animales como gallinas y patos. El sistema combina sensores y actuadores para garantizar el control automático de temperatura, niveles de agua, y peso del comedero. También incluye una interfaz de usuario mediante una pantalla OLED y botones físicos.
 
-- **Monitoreo de Temperatura y Humedad**: Utiliza un sensor DHT22 para medir la temperatura y la humedad dentro del galpón y muestra los valores en una pantalla OLED.
-- **Control Automático de Ventilación**: Activa un ventilador cuando la temperatura excede un umbral específico para mantener un ambiente óptimo para las gallinas.
-- **Monitoreo y Relleno del Nivel de Agua**: Utiliza un sensor MH-RD para detectar el nivel de agua y activa una bomba de agua cuando el nivel es bajo.
-- **Autollenado del Comedero**: Utiliza un sensor de peso HX711 para medir el nivel de alimento en el comedero y activa un mecanismo de relleno cuando el peso es insuficiente.
-- **Interfaz Visual**: Muestra la temperatura, humedad, estado del ventilador, nivel de agua y peso del comedero en una pantalla OLED de 128x32.
+## Objetivo
 
-## Componentes Utilizados
+Automatizar las tareas de mantenimiento del galpón, mejorando la eficiencia y reduciendo la intervención manual.
 
-- **Raspberry Pi Pico**: Unidad de procesamiento principal.
-- **Sensor DHT22**: Sensor de temperatura y humedad.
-- **Sensor de Nivel de Agua MH-RD**: Sensor para detectar el nivel de agua.
-- **Sensor de Peso HX711**: Sensor para medir el peso del comedero.
-- **Pantalla OLED 128x32**: Pantalla para mostrar datos en tiempo real.
-- **Relés**: Para controlar el ventilador y el mecanismo de relleno de agua y alimento.
-- **Ventilador**: Para la ventilación del galpón.
-- **Bomba de Agua**: Para rellenar el bebedero automáticamente.
-- **Mecanismo de Relleno del Comedero**: Controlado por un relé y activado basado en el peso.
+## Descripción General
 
-## Conexiones de Hardware
+El sistema se basa en una Raspberry Pi Pico y controla las siguientes funcionalidades:
+- **Monitoreo de temperatura y humedad interior/exterior.**
+- **Control automático del ventilador.**
+- **Gestión del nivel de agua con un sensor y una bomba.**
+- **Autollenado del comedero usando un sensor de peso y un servomotor.**
+- **Alarmas audibles en caso de niveles críticos de agua o comida.**
 
-### Conexiones de Sensores y Actuadores
+## Componentes del Sistema
 
-| Componente                | Conexión en Raspberry Pi Pico |
-|---------------------------|------------------------------|
-| **Sensor DHT22**          | VCC: 3.3V, GND: GND, DATA: GP15 |
-| **Sensor de Nivel de Agua MH-RD** | VCC: 3.3V, GND: GND, D0: GP2 |
-| **Sensor de Peso HX711**  | VCC: 3.3V, GND: GND, DT: GP3, SCK: GP4 |
-| **Pantalla OLED 128x32**  | VCC: 3.3V, GND: GND, SDA: GP0, SCL: GP1 |
-| **Relé Ventilador**       | GP16 |
-| **Relé Relleno de Agua**  | GP17 |
-| **Relé Relleno de Comedero** | GP18 |
+### Hardware
+- **Microcontrolador**: Raspberry Pi Pico.
+- **Pantalla OLED**: 128x64 píxeles, interfaz I2C.
+- **Sensores**:
+  - DHT22 para temperatura y humedad (interior y exterior).
+  - HX711 para medir el peso del comedero.
+  - Sensor de nivel de agua para detectar llenado.
+- **Actuadores**:
+  - Relés para controlar el ventilador y la bomba de agua.
+  - Servomotor para el mecanismo de llenado del comedero.
+  - Buzzer para emitir alarmas.
+- **Botones físicos** para la selección del tipo de animal (gallinas/patos).
 
-## Instalación y Configuración
+### Software
+- **Lenguaje**: CircuitPython/MicroPython.
+- **Librerías principales**:
+  - `ssd1306` para controlar la pantalla OLED.
+  - `dht` para los sensores de temperatura/humedad.
+  - `hx711` para el sensor de peso.
 
-1. **Descargar el Repositorio**:
-   ```bash
-   git clone https://github.com/geekylara/EcosistemaDeMantencionDeGalpon.git
-   cd EcosistemaDeMantencionDeGalpo
-   ```
+## Configuración del Hardware
 
-2. **Copiar Librerías Necesarias**:
-   - Copia `hx711.py` al directorio `/lib` de tu Raspberry Pi Pico. <a rel="noreferrer" target="_new" href="https://github.com/robert-hh/hx711">Repositorio Del sensor HX711</a>
-   - Asegúrate de tener las librerías `dht`, `ssd1306`, y `machine` instaladas.
+### Conexiones
+| Componente           | Pin de la Pico | Descripción                          |
+|----------------------|----------------|--------------------------------------|
+| OLED (SCL, SDA)      | GP1, GP0       | Pantalla OLED con I2C.               |
+| Sensor DHT22 (Int.)  | GP15           | Sensor de temperatura interior.      |
+| Sensor DHT22 (Ext.)  | GP16           | Sensor de temperatura exterior.      |
+| Relé ventilación     | GP20           | Controla el ventilador.              |
+| Relé bomba de agua   | GP22           | Controla la bomba de agua.           |
+| Sensor nivel agua    | GP2            | Entrada del sensor de nivel de agua. |
+| Sensor peso (HX711)  | GP4, GP3       | Pines de datos y reloj.              |
+| Servomotor           | GP19           | PWM para control del servo.          |
+| Buzzer               | GP18           | Alarma audible.                      |
+| Botón gallinas       | GP10           | Selección del animal: gallinas.      |
+| Botón patos          | GP11           | Selección del animal: patos.         |
 
-3. **Cargar el Código en la Raspberry Pi Pico**:
-   - Utiliza un editor compatible con MicroPython para cargar el código `EcoGalpon.py` en tu Raspberry Pi Pico.
+### Configuración de Software
+1. Instalar CircuitPython o MicroPython en la Raspberry Pi Pico.
+2. Instalar las librerías necesarias en la carpeta `lib/` del dispositivo:
+   - `ssd1306.py`
+   - `dht.py`
+   - `hx711.py`
+3. Subir el archivo principal del código al dispositivo.
 
-## Uso del Proyecto
+## Funcionalidades Principales
 
-1. **Encender el Sistema**:
-   - Conecta todos los componentes según las conexiones de hardware.
-   - Alimenta la Raspberry Pi Pico.
+1. **Monitoreo y Control**:
+   - Monitoreo continuo de la temperatura interior y exterior.
+   - Activación del ventilador si la temperatura excede el setpoint.
 
-2. **Visualización de Datos**:
-   - La pantalla OLED mostrará la temperatura, humedad, estado del ventilador, nivel de agua y peso del comedero en tiempo real.
+2. **Gestión del Nivel de Agua**:
+   - Activación de la bomba si el nivel de agua está bajo.
+   - Apagado automático una vez completado el llenado.
 
-3. **Automatización**:
-   - El ventilador se activará automáticamente si la temperatura supera los 30°C.
-   - La bomba de agua se activará si el sensor MH-RD detecta un nivel bajo de agua.
-   - El mecanismo de relleno del comedero se activará si el peso del alimento es menor a 450 gramos.
+3. **Control del Comedero**:
+   - Monitoreo del peso del comedero.
+   - Activación del servomotor para rellenar cuando el peso esté por debajo del setpoint.
 
-## Modificaciones del Proyecto
+4. **Alarmas**:
+   - Alertas audibles para niveles críticos de agua o comida.
+   - Indicaciones visuales en la pantalla OLED.
 
-### Parámetros Ajustables
+5. **Interfaz de Usuario**:
+   - Selección de tipo de animal al inicio.
+   - Visualización en tiempo real de temperatura, peso y estado del agua.
 
-Los siguientes parámetros están ajustados según los requerimientos de la línea genética de gallinas **Super Nick**. Puedes modificar estos valores en el código según tus propias necesidades:
+## Máquina de Estados
 
-- **Umbral de Temperatura para Ventilación**: Línea 43 en `EcoGalpon.py`
-  ```python
-  if temp > 30:  # Ajusta este valor según sea necesario
-  ```
+El sistema utiliza máquinas de estado finito (FSM) para controlar los subsistemas principales:
+- **Ventilador FSM**:
+  - Estados: `APAGADO`, `ENCENDIDO`.
+  - Eventos: temperatura supera o desciende del setpoint.
+- **Agua FSM**:
+  - Estados: `NIVEL_OK`, `NIVEL_BAJO`, `BOMBA_ENCENDIDA`.
+  - Eventos: detección de nivel de agua.
+- **Comedero FSM**:
+  - Estados: `PESO_OK`, `RELLENO_ENCENDIDO`, `ALARMA_COMEDERO`.
+  - Eventos: peso cae por debajo del setpoint.
 
-- **Umbral de Peso para Relleno del Comedero**: Línea 49 en `EcoGalpon.py`
-  ```python
-  if weight < 450:  # Ajusta este valor según sea necesario
-  ```
+## Uso del Sistema
 
-- **Factor de Escala del Sensor de Peso**: Línea 29 en `EcoGalpon.py`
-  ```python
-  scale_factor = 214.0267  # Ajusta este valor según la calibración de tu sensor
-  ```
+1. **Inicio**:
+   - Al encender, selecciona el tipo de animal presionando los botones correspondientes.
+   - El sistema ajusta los setpoints de temperatura y peso según la selección.
 
-## Ejemplo de Código
+2. **Operación Automática**:
+   - El sistema opera de forma autónoma para mantener las condiciones adecuadas.
+   - Se muestran datos en la pantalla OLED y se emiten alarmas en caso necesario.
 
-```python
-# El código completo del proyecto se encuentra en el archivo EcoGalpon.py.
-# Aquí se muestra una sección del código para ilustrar la estructura general.
-from machine import Pin, I2C
-import time
-import dht
-import ssd1306
-from hx711 import HX711
+## Calibración
 
-# Configuración del I2C y la pantalla OLED
-i2c = I2C(0, scl=Pin(1), sda=Pin(0))
-oled = ssd1306.SSD1306_I2C(128, 32, i2c)
+1. **Sensor de Peso (HX711)**:
+   - Ajustar el factor de escala para el peso esperado.
+   - Usar objetos de peso conocido para la calibración inicial.
 
-# Configuración del sensor DHT22
-sensor = dht.DHT22(Pin(15))
+## Contribución
 
-# Configuración del sensor de peso HX711
-hx711 = HX711(Pin(4, Pin.OUT), Pin(3, Pin.IN))
-hx711.tare()
-hx711.set_scale(214.0267)
-
-# Bucle principal del programa
-while True:
-    # Código para leer los sensores y controlar los relés
-    ...
-    time.sleep(2)
-```
-
-## Contribuciones
-
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o un pull request en GitHub.
+Este proyecto está diseñado para mejorar las operaciones diarias de un galpón. Si deseas contribuir con mejoras, sugerencias o correcciones, ¡eres bienvenido a hacerlo!
 
 ## Licencia
 
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para obtener más detalles.
-
----
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
